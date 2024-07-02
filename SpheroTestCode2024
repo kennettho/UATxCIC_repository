@@ -1,0 +1,23 @@
+async function startProgram() {
+	await roll(0, 147, 3);
+	stopRoll();
+	setMainLed({ r: 255, g: 19, b: 26 });
+	setHeading(90);
+	setSpeed(-120);
+	await fade({ r: 51, g: 89, b: 255 }, { r: 56, g: 255, b: 9 }, 0);
+	await strobe({ r: 255, g: 174, b: 27 }, 5, 10);
+	setBackLed({ r: 255, g: 0, b: 243 });
+	await delay(1.5);
+	stopRoll();
+}
+
+async function onCollision() {
+	stopRoll();
+	await Sound.Personality.Alert.play(true);
+	for (var _i0 = 0; _i0 < 3; ++_i0) {
+		await strobe({ r: 255, g: 5, b: 9 }, 2, 5);
+		await strobe({ r: 63, g: 6, b: 255 }, 2, 5);
+		await delay(0.025);
+	}
+}
+registerEvent(EventType.onCollision, onCollision);
